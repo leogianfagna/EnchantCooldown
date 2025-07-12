@@ -19,11 +19,11 @@ Esse projeto cria um mod para Minecraft Fabric, que exibe o tempo de espera de e
   <h1>🔥 Features</h1>
 </div>
 
-O objetivo do mod é disponibilizar flexibidade para os usuários customizarem suas preferências. Nem sempre queremos exibir todos os tempos de recarga, dado o fato de que pode ficar poluído, o que nunca é bom durante um combate, não é mesmo?
+O objetivo do mod é disponibilizar flexibilidade para os usuários customizarem suas preferências. Nem sempre queremos exibir todos os tempos de recarga, dado o fato de que pode ficar poluído, o que nunca é bom durante um combate, não é mesmo?
 
 ### ⏳ Tempo de recarga
 
-Enquantos possuim um tempo de recarga após eles serem ativados. Rastrear esse tempo pode ser muito útil para montar combos específicos, se preparar para situações ou até alterar entre itens enquanto alguns encantamentos estão na espera.
+Exibe a contagem regressiva do tempo de recarga após ele ser ativado. Rastrear esse tempo pode ser muito útil para montar combos específicos, se preparar para situações ou até alterar entre itens enquanto alguns encantamentos estão na espera.
 <br></br>
 <img width="320" height="69" alt="image" src="https://github.com/user-attachments/assets/af97bc5c-0797-45b5-a4a3-1e61b7bc322a" />
 
@@ -35,7 +35,7 @@ O usuário escolhe quais encantamentos quer rastrear, em vez de rastrear todos o
 
 ### 🧶 A fazer
 
-Você pode propor sugestões, seja me enviando mensagem ou adicionado-as aqui, ou também propor mudanças no plugin através de pull requests, já que é código aberto! Da minha parte, está proposto para esse mod ainda possuir as seguintes funcionalidades (sinta-se convidado a me ajudar a desenvolver):
+Você pode propor **sugestões**, seja me enviando mensagens ou [adicionando-as aqui](https://github.com/leogianfagna/EnchantCooldown/issues/new?template=1-sugest.yml), ou também propor mudanças no plugin através de pull requests, já que é código aberto! Da minha parte, está proposto para esse mod ainda possuir as seguintes funcionalidades (sinta-se convidado a me ajudar a desenvolver):
 
 - Adição de encantamentos via menu customizado.
 - Possibilidade de alterar o tempo de recarga direto no menu sem necessidade de refazer a configuração.
@@ -46,16 +46,16 @@ Você pode propor sugestões, seja me enviando mensagem ou adicionado-as aqui, o
 <div align="center">
   <h1>📥 Instalação e uso</h1>
 </div>
-Fique atento com as especificações de uso do mod, que exige fabric e possui versões específicas:
+Fique atento com as especificações de uso do mod, que exige Fabric e possui versões específicas:
 
 ### 🖥️ Download
 
-- **Versão estável**: Disponível para descarregar aqui, as versões estáveis são sempre separadas com um patch notes e lançadas com controles de versão e grandes alterações.
-- **Versão dev**: Também é possível instalar a build compilada a cada alteração de código, que são úteis para testar as últimas mudanças antes que elas sejam empacotadas em uma versão. Os artefatos gerados ficam para livre uso aqui.
+- **Versão estável**: Disponível para [descarregar aqui](https://github.com/leogianfagna/EnchantCooldown/releases), as versões estáveis são sempre separadas com um patch notes e lançadas com controles de versão e grandes alterações.
+- **Versão dev**: Também é possível instalar a build compilada a cada alteração de código, que são úteis para testar as últimas mudanças antes que elas sejam empacotadas em uma versão. Os artefatos gerados ficam para livre uso [aqui](https://github.com/leogianfagna/EnchantCooldown/actions).
 
 ### 🛠️ Dependências e versões testadas
 
-O mod não foi testado em diferentes versões e nem contextos, a versão recomendado e suas dependências são:
+O mod não foi testado em diferentes versões e nem contextos, a versão recomendada e suas dependências são:
 
 - [Fabric](https://fabricmc.net/use/installer/).
 - Versão do jogo: 1.21.1.
@@ -67,7 +67,7 @@ Até o momento, o mod não possui menus customizados (mas se encontra em desenvo
 |-------------------------------|-----------------------------------------------------------------------|---------------------------|
 | /ecd list                     | Exibe a lista de todos os encantamentos registrados pelo usuário.     | /ecd list                 |
 | /ecd set <enchant> <cooldown> | Adiciona um encantamento na lista de recargas (recarga em segundos).  | /ecd set "Furacão" 25     |
-| /ecd set remove <enchant>     | Remove um encanatmento da lista de recargas.                          | /ecd set remove "Furacão" |
+| /ecd set remove <enchant>     | Remove um encantamento da lista de recargas.                          | /ecd set remove "Furacão" |
 
 > [!NOTE]  
 > Utilize o nome do encantamento entre `"` quando ele possui caracteres especiais (acentuação ou ç) ou nome composto (quando existe espaço).
