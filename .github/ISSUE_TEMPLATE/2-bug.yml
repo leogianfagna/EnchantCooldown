@@ -1,0 +1,25 @@
+name: Bug
+description: Reportar um bug ou comportamento equivocado.
+labels: ["bug"]
+assignees: leogianfagna
+body:
+  - type: input
+    attributes:
+      label: Versão do client
+      placeholder: ex. 1.21.1
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Descrição do bug
+      description: Descreva o que ocorreu de forma equivocada.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reprodução
+      description: |
+        Descreva detalhamente como reproduzir o bug. Se alguém que denunciou,
+        pergunte-o ou peça prints do bug e envie aqui.
+    validations:
+      required: true

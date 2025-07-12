@@ -1,0 +1,11 @@
+name: Sugestão
+description: Adicionar uma sugestão para o mod.
+labels: ["sugestão"]
+assignees: leogianfagna
+body:
+  - type: textarea
+    attributes:
+      label: Sugestão
+      description: Descreva a sua ideia para ser implementada.
+    validations:
+      required: true
