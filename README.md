@@ -37,11 +37,14 @@ O usuário escolhe quais encantamentos quer rastrear, em vez de rastrear todos o
 
 Você pode propor **sugestões**, seja me enviando mensagens ou [adicionando-as aqui](https://github.com/leogianfagna/EnchantCooldown/issues/new?template=1-sugest.yml), ou também propor mudanças no plugin através de pull requests, já que é código aberto! Da minha parte, está proposto para esse mod ainda possuir as seguintes funcionalidades (sinta-se convidado a me ajudar a desenvolver):
 
-- Adição de encantamentos via menu customizado.
-- Possibilidade de alterar o tempo de recarga direto no menu sem necessidade de refazer a configuração.
-- Habilitar/desabilitar rastreamentos sem a necessidade de apagá-los da sua configuração.
-- Ícones mostrando qual é a aplicação daquele encantamento e em qual item ele está.
-- Rastreamento profundo, que o usuário pode escolher alguns encantamentos para esse tópico. Esses encantamentos ficarão na tela 100% das vezes, mostrando como "Pronto" se não estão em recarga. Isso pode ser útil para encantamentos específicos que exigem uma estratégia separada.
+- [] Ordenação baseada em tempo restante.
+- [] Suporte para multi versões.
+- [] Adição de encantamentos via menu customizado.
+- [] Possibilidade de alterar o tempo de recarga direto no menu sem necessidade de refazer a configuração.
+- [] Habilitar/desabilitar rastreamentos sem a necessidade de apagá-los da sua configuração.
+- [] Ícones mostrando qual é a aplicação daquele encantamento e em qual item ele está.
+- [] Customização estética: local de exibição, tamanho da fonte, etc.
+- [] Rastreamento profundo, que o usuário pode escolher alguns encantamentos para esse tópico. Esses encantamentos ficarão na tela 100% das vezes, mostrando como "Pronto" se não estão em recarga. Isso pode ser útil para encantamentos específicos que exigem uma estratégia separada.
 
 <div align="center">
   <h1>📥 Instalação e uso</h1>
