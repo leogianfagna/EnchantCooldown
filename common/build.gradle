@@ -1,0 +1,24 @@
+plugins {
+	id 'java-library'
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://maven.fabricmc.net/" }
+}
+
+dependencies {
+	// Bibliotecas Java padrão
+	implementation 'com.google.code.gson:gson:2.10.1'
+	implementation 'org.slf4j:slf4j-api:2.0.9'
+
+	// APIs do Fabric que são usadas no código comum
+	compileOnly "net.fabricmc:fabric-loader:${project.loader_version}"
+	compileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}

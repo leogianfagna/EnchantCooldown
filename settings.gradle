@@ -8,3 +8,9 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+rootProject.name = 'enchantcooldown'
+
+include 'common'
+include 'versions:1.21.1'
+include 'versions:1.21.8'
