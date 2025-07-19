@@ -6,9 +6,8 @@
 name: build
 on:
   push:
-    paths:
-      - 'src/**'
-  pull_request:
+    branches:
+      - main
     paths:
       - 'src/**'
 
