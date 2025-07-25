@@ -1,6 +1,6 @@
 package com.leogianfagna.command;
 
-import com.leogianfagna.EnchantCooldownClient;
+import com.leogianfagna.EnchantCooldown;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -15,7 +15,7 @@ public class TrackerCommand {
                     .then(ClientCommandManager.literal("list")
                             .executes(context -> {
                                 context.getSource().sendFeedback(Text.of("§6Habilidades configuradas:"));
-                                EnchantCooldownClient.COOLDOWN_MANAGER.entries.forEach((entry, seconds) -> {
+                                EnchantCooldown.COOLDOWN_MANAGER.entries.forEach((entry, seconds) -> {
                                     context.getSource()
                                             .sendFeedback(Text.of("§7- §f" + entry + "§7: §e" + seconds + "s"));
                                 });
@@ -27,7 +27,7 @@ public class TrackerCommand {
                                             .executes(context -> {
                                                 String entry = StringArgumentType.getString(context, "name");
                                                 int seconds = IntegerArgumentType.getInteger(context, "seconds");
-                                                EnchantCooldownClient.COOLDOWN_MANAGER.setEntry(entry, seconds);
+                                                EnchantCooldown.COOLDOWN_MANAGER.setEntry(entry, seconds);
                                                 context.getSource().sendFeedback(Text.of("§aCooldown de " + entry
                                                         + " definido para " + seconds + " segundos"));
                                                 return Command.SINGLE_SUCCESS;
@@ -37,7 +37,7 @@ public class TrackerCommand {
                                     .then(ClientCommandManager.argument("name", StringArgumentType.string())
                                             .executes(context -> {
                                                 String entry = StringArgumentType.getString(context, "name");
-                                                if (EnchantCooldownClient.COOLDOWN_MANAGER.removeEntry(entry)) {
+                                                if (EnchantCooldown.COOLDOWN_MANAGER.removeEntry(entry)) {
                                                     context.getSource().sendFeedback(
                                                             Text.of("§aHabilidade " + entry + " removida"));
                                                 } else {
