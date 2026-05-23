@@ -38,6 +38,63 @@ test {
 	useJUnitPlatform()
 }
 
+def minecraftCompatibilityMatrix = [
+	[version: '1.21', yarn: '1.21+build.9', fabricApi: '0.102.0+1.21'],
+	[version: '1.21.1', yarn: '1.21.1+build.3', fabricApi: '0.116.12+1.21.1'],
+	[version: '1.21.2', yarn: '1.21.2+build.1', fabricApi: '0.106.1+1.21.2'],
+	[version: '1.21.3', yarn: '1.21.3+build.2', fabricApi: '0.114.1+1.21.3'],
+	[version: '1.21.4', yarn: '1.21.4+build.8', fabricApi: '0.119.4+1.21.4'],
+	[version: '1.21.5', yarn: '1.21.5+build.1', fabricApi: '0.128.2+1.21.5'],
+	[version: '1.21.6', yarn: '1.21.6+build.1', fabricApi: '0.128.2+1.21.6'],
+	[version: '1.21.7', yarn: '1.21.7+build.8', fabricApi: '0.129.0+1.21.7'],
+	[version: '1.21.8', yarn: '1.21.8+build.1', fabricApi: '0.136.1+1.21.8'],
+	[version: '1.21.9', yarn: '1.21.9+build.1', fabricApi: '0.134.1+1.21.9'],
+	[version: '1.21.10', yarn: '1.21.10+build.3', fabricApi: '0.138.4+1.21.10'],
+	[version: '1.21.11', yarn: '1.21.11+build.5', fabricApi: '0.141.4+1.21.11'],
+]
+
+tasks.register('compatibilityTest') {
+	group = 'verification'
+	description = 'Builds and tests the mod against every supported Minecraft 1.21.x version.'
+	onlyIf {
+		!providers.gradleProperty('skipCompatibilityMatrix').present
+	}
+
+	doLast {
+		def isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
+		def wrapper = file(isWindows ? 'gradlew.bat' : 'gradlew').absolutePath
+		minecraftCompatibilityMatrix.each { target ->
+			logger.lifecycle("Validating Minecraft ${target.version} with Yarn ${target.yarn} and Fabric API ${target.fabricApi}")
+			def command = [
+					wrapper,
+					'build',
+					'--console=plain',
+					'-PskipCompatibilityMatrix=true',
+					'-Ploom_version=1.14.10',
+					"-Pminecraft_version=${target.version}",
+					"-Pyarn_mappings=${target.yarn}",
+					"-Pfabric_version=${target.fabricApi}",
+					'-Ploader_version=0.19.2'
+			]
+			if (isWindows) {
+				command = ['cmd', '/c'] + command
+			}
+			command = command.collect { it.toString() }
+
+			def process = new ProcessBuilder(command)
+					.directory(projectDir)
+					.inheritIO()
+					.start()
+			def exitCode = process.waitFor()
+			if (exitCode != 0) {
+				throw new GradleException("Compatibility test failed for Minecraft ${target.version} with exit code ${exitCode}")
+			}
+		}
+	}
+}
+
+test.dependsOn tasks.named('compatibilityTest')
+
 processResources {
 	inputs.property "version", project.version
 

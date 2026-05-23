@@ -124,6 +124,27 @@ public class CooldownManager {
         saveConfig();
     }
 
+    public boolean updateEntry(String currentName, String newName, int seconds) {
+        CooldownEntry currentEntry = entries.get(currentName);
+        if (currentEntry == null) {
+            return false;
+        }
+
+        String trimmedName = newName.trim();
+        if (trimmedName.isEmpty()) {
+            return false;
+        }
+
+        CooldownEntry updatedEntry = new CooldownEntry(Math.max(1, seconds), currentEntry.isEnabled());
+        if (!currentName.equals(trimmedName)) {
+            entries.remove(currentName);
+            activeCooldowns.remove(currentName);
+        }
+        entries.put(trimmedName, updatedEntry);
+        saveConfig();
+        return true;
+    }
+
     public void setEntryEnabled(String entry, boolean enabled) {
         CooldownEntry cooldownEntry = entries.get(entry);
         if (cooldownEntry == null) {

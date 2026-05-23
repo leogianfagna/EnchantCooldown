@@ -20,23 +20,31 @@ public class CooldownMenuScreen extends Screen {
 
     private final Screen parent;
     private final int initialScrollOffset;
+    private final String initialEditingEntry;
     private TextFieldWidget nameField;
     private TextFieldWidget secondsField;
+    private String editingEntry;
     private int scrollOffset;
 
     public CooldownMenuScreen(Screen parent) {
-        this(parent, 0);
+        this(parent, 0, null);
     }
 
     private CooldownMenuScreen(Screen parent, int scrollOffset) {
+        this(parent, scrollOffset, null);
+    }
+
+    private CooldownMenuScreen(Screen parent, int scrollOffset, String editingEntry) {
         super(Text.literal("EnchantCooldown"));
         this.parent = parent;
         this.initialScrollOffset = scrollOffset;
+        this.initialEditingEntry = editingEntry;
     }
 
     @Override
     protected void init() {
         scrollOffset = initialScrollOffset;
+        editingEntry = initialEditingEntry;
 
         int centerX = width / 2;
         int top = 36;
@@ -51,9 +59,25 @@ public class CooldownMenuScreen extends Screen {
         secondsField.setPlaceholder(Text.literal("s"));
         addDrawableChild(secondsField);
 
-        addDrawableChild(ButtonWidget.builder(Text.literal("Adicionar"), button -> addEntry())
+        if (editingEntry != null) {
+            CooldownEntry entry = EnchantCooldown.COOLDOWN_MANAGER.getEntries().get(editingEntry);
+            if (entry != null) {
+                nameField.setText(editingEntry);
+                secondsField.setText(String.valueOf(entry.getSeconds()));
+            } else {
+                editingEntry = null;
+            }
+        }
+
+        addDrawableChild(ButtonWidget.builder(Text.literal(editingEntry == null ? "Adicionar" : "Salvar"), button -> saveEntry())
                 .dimensions(centerX + 80, top, 90, 20)
                 .build());
+
+        if (editingEntry != null) {
+            addDrawableChild(ButtonWidget.builder(Text.literal("Cancelar"), button -> reload(scrollOffset))
+                    .dimensions(centerX + 176, top, 74, 20)
+                    .build());
+        }
 
         addDrawableChild(ButtonWidget.builder(Text.literal("Fechar"), button -> close())
                 .dimensions(centerX - 50, height - 30, 100, 20)
@@ -78,13 +102,17 @@ public class CooldownMenuScreen extends Screen {
 
             addDrawableChild(ButtonWidget.builder(getToggleText(cooldownEntry), button -> {
                 EnchantCooldown.COOLDOWN_MANAGER.setEntryEnabled(name, !cooldownEntry.isEnabled());
-                reload(scrollOffset);
-            }).dimensions(centerX + 42, y, 82, 20).build());
+                reload(scrollOffset, editingEntry);
+            }).dimensions(centerX + 18, y, 72, 20).build());
+
+            addDrawableChild(ButtonWidget.builder(Text.literal("Editar"), button -> reload(scrollOffset, name))
+                    .dimensions(centerX + 98, y, 64, 20)
+                    .build());
 
             addDrawableChild(ButtonWidget.builder(Text.literal("Remover"), button -> {
                 EnchantCooldown.COOLDOWN_MANAGER.removeEntry(name);
                 reload(scrollOffset);
-            }).dimensions(centerX + 132, y, 76, 20).build());
+            }).dimensions(centerX + 170, y, 76, 20).build());
         }
     }
 
@@ -102,7 +130,7 @@ public class CooldownMenuScreen extends Screen {
         return Math.max(1, (height - 122) / 26);
     }
 
-    private void addEntry() {
+    private void saveEntry() {
         String name = nameField.getText().trim();
         if (name.isEmpty()) {
             return;
@@ -115,12 +143,20 @@ public class CooldownMenuScreen extends Screen {
             return;
         }
 
-        EnchantCooldown.COOLDOWN_MANAGER.setEntry(name, seconds);
+        if (editingEntry == null) {
+            EnchantCooldown.COOLDOWN_MANAGER.setEntry(name, seconds);
+        } else {
+            EnchantCooldown.COOLDOWN_MANAGER.updateEntry(editingEntry, name, seconds);
+        }
         reload(scrollOffset);
     }
 
     private void reload(int nextScrollOffset) {
-        MinecraftClient.getInstance().setScreen(new CooldownMenuScreen(parent, nextScrollOffset));
+        reload(nextScrollOffset, null);
+    }
+
+    private void reload(int nextScrollOffset, String nextEditingEntry) {
+        MinecraftClient.getInstance().setScreen(new CooldownMenuScreen(parent, nextScrollOffset, nextEditingEntry));
     }
 
     @Override

@@ -62,4 +62,29 @@ class CooldownManagerTest {
 
         assertFalse(manager.activeCooldowns.containsKey("Furacao"));
     }
+
+    @Test
+    void updatesEntryNameAndCooldown() {
+        CooldownManager manager = new CooldownManager(tempDir.resolve("enchantcooldown.json"));
+
+        manager.setEntry("Furacao", 25);
+        boolean updated = manager.updateEntry("Furacao", "Furacao Supremo", 40);
+
+        assertTrue(updated);
+        assertFalse(manager.getEntries().containsKey("Furacao"));
+        assertEquals(40, manager.getEntries().get("Furacao Supremo").getSeconds());
+        assertTrue(manager.getEntries().get("Furacao Supremo").isEnabled());
+    }
+
+    @Test
+    void updateEntryPreservesDisabledState() {
+        CooldownManager manager = new CooldownManager(tempDir.resolve("enchantcooldown.json"));
+
+        manager.setEntry("Furacao", 25);
+        manager.setEntryEnabled("Furacao", false);
+        boolean updated = manager.updateEntry("Furacao", "Furacao Supremo", 40);
+
+        assertTrue(updated);
+        assertFalse(manager.getEntries().get("Furacao Supremo").isEnabled());
+    }
 }
