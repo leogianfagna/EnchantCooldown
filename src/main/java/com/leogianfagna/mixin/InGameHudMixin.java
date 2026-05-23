@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
 
-    @Inject(method = "method_1758", at = @At("HEAD"))
+    @Inject(method = "setOverlayMessage", at = @At("HEAD"))
     public void onSetOverlayMessage(Text message, boolean tintedBackground, CallbackInfo ci) {
         ActionBarListener.handleActionBarMessage(message.getString());
     }

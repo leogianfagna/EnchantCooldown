@@ -8,13 +8,35 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'build.gradle'
+      - 'gradle.properties'
+      - 'settings.gradle'
+      - 'gradle/**'
   pull_request:
     paths:
       - 'src/**'
+      - 'build.gradle'
+      - 'gradle.properties'
+      - 'settings.gradle'
+      - 'gradle/**'
 
 jobs:
   build:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        minecraft:
+          - version: '1.21.1'
+            yarn: '1.21.1+build.3'
+            fabric_api: '0.116.4+1.21.1'
+            loader: '0.16.14'
+            loom: '1.11-SNAPSHOT'
+          - version: '1.21.11'
+            yarn: '1.21.11+build.3'
+            fabric_api: '0.141.4+1.21.11'
+            loader: '0.19.2'
+            loom: '1.14.10'
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
@@ -32,7 +54,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: build
-        run: ./gradlew build
+        run: >
+          ./gradlew build
+          -Pminecraft_version=${{ matrix.minecraft.version }}
+          -Pyarn_mappings=${{ matrix.minecraft.yarn }}
+          -Pfabric_version=${{ matrix.minecraft.fabric_api }}
+          -Ploader_version=${{ matrix.minecraft.loader }}
+          -Ploom_version=${{ matrix.minecraft.loom }}
         
       - name: capture build artifacts
         uses: actions/upload-artifact@v4
